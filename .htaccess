@@ -1,0 +1,22 @@
+# Make addon folders inaccessible
+RewriteEngine On
+	# Denies access to the addon folders through the main domain.
+	# The domain 'cavemancafe.co.za' is stored in the folder 'therealcaveman' in the root directory of our main domain.
+        RewriteCond %{HTTP_HOST} ^(www.)?yosemitelabs.com$ [NC]
+        RewriteCond %{REQUEST_URI} ^/therealcaveman/(.*)$
+        RewriteRule ^(.*)$ - [L,R=404]
+        
+        # Redirects the subdomain to the actual domain.
+        RewriteCond %{HTTP_HOST} ^.+yosemitelabs\.com$ [NC,OR]
+        RewriteCond %{HTTP_HOST} ^(www.)?caveman\.cafe$ [NC,OR]
+        RewriteCond %{HTTP_HOST} ^www\..*$ [NC]
+        RewriteCond %{REQUEST_URI} ^/$
+        RewriteRule ^(.*)$ "http://cavemancafe.co.za/$1" [L,R=301]
+        
+        
+        # Redirects the subdomain to the actual domain. OLD
+        #RewriteCond %{HTTP_HOST} ^(www.)?cavemancafe-co-za.yosemitelabs.com$ [NC,OR]
+        #RewriteCond %{HTTP_HOST} ^(www.)?caveman-cafe.yosemitelabs.com$ [NC,OR]
+        #RewriteCond %{HTTP_HOST} ^(www.)?caveman.cafe$ [NC]
+        #RewriteCond %{REQUEST_URI} ^/$
+        #RewriteRule ^(.*)$ "http://cavemancafe.co.za/$1" [L,R=301]
